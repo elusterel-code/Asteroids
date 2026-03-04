@@ -34,7 +34,8 @@ while True:
 
     for event in pygame.event.get():
         pass
-
+    
+    Player.update(dt)
     screen.fill("black")
     Player.draw(screen)
                 
@@ -46,10 +47,8 @@ while True:
             exit()
 
     pygame.time.Clock().tick(60)
-        
-
-
     dt = pygame.time.Clock().tick(60) / 1000 
+    
 
     
 
