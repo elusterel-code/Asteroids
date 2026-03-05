@@ -7,10 +7,6 @@ from asteroidfield import AsteroidField
 
 
 
-pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.time.Clock()
-dt = 0
 
 
 
@@ -20,62 +16,72 @@ dt = 0
 
 
 def main():
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pygame.time.Clock()
+    
+    
+
+
+
     print("Starting Asteroids with Pygame version: ", pygame.version.ver)
     print("Screen width:", SCREEN_WIDTH)
     print("Screen height:", SCREEN_HEIGHT)
 
-updatable = pygame.sprite.Group()
-drawable = pygame.sprite.Group()
-asteroids = pygame.sprite.Group()
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
 
-Player.containers = (updatable, drawable)
-Asteroid.containers = (asteroids, updatable, drawable)
-AsteroidField.containers = (updatable)
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable,)
 
-asteroid_field = AsteroidField()
-
-
-center_x = SCREEN_WIDTH / 2
-center_y = SCREEN_HEIGHT / 2
-Player = Player(center_x, center_y)
+    
 
 
+    center_x = SCREEN_WIDTH / 2
+    center_y = SCREEN_HEIGHT / 2
+    player = Player(center_x, center_y)
+    asteroid_field = AsteroidField()
 
+
+
+
+   
+    dt = 0
+    while True:
+        log_state()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+        updatable.update(dt)
+        screen.fill("black")
+    
+                
+    
+
+        for obj in drawable:
+            obj.draw(screen)
+
+        pygame.display.flip()
+
+
+        
+        
+        dt = clock.tick(60) / 1000 
+        print(dt)
+    
+
+    
 
 if __name__ == "__main__":
-    main()
-
-
-while True:
-    log_state()
-
-    for event in pygame.event.get():
-        pass
-
-    updatable.update(dt)
-    screen.fill("black")
-    #Player.draw(screen)
-                
-    pygame.display.flip()
-
-    for obj in drawable:
-        obj.draw(screen)
-
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-
-    pygame.time.Clock().tick(60)
-    dt = pygame.time.Clock().tick(60) / 1000 
-    
+        main()
 
     
-
-
-    print(dt)
 
 
 
