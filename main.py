@@ -1,5 +1,5 @@
 import pygame
-
+from shot import Shot
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state
 from player import Player
@@ -74,6 +74,13 @@ def main():
 
 
         screen.fill("black")
+
+        for shot in shots:
+            for asteroid in asteroids:
+                if shot.collides_with(asteroid):
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    asteroid.split()
     
                 
     
@@ -88,6 +95,10 @@ def main():
         
         dt = clock.tick(60) / 1000 
         #print(dt)
+        player.timer -= dt
+        #print(player.timer)
+
+
     
 
     
